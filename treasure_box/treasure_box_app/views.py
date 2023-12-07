@@ -1,17 +1,24 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, redirect
+from .forms import UploadFileForm
+import os
+from django.conf import settings
 
 # Create your views here.
 def timeline(request):
     return render(request, 'timeline.html')
 
 def upload(request):
-    if request.method == 'POST' and request.FILES.get('file'):
-        file = request.FILES['file']
-        # Process and save the file as needed
-        # You can use Django forms or handle file processing here
-        return redirect('timeline')  # Redirect back to the timeline after upload
-    return redirect('timeline')  # Redirect in case of GET request or no file
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file'])
+            return redirect('timeline')
+    else:
+        form = UploadFileForm()
+    return render(request, 'upload.html', {'form': form})
 
-# urls.py
-
-    
+def handle_uploaded_file(file):
+    file_path = os.path.join(settings.MEDIA_ROOT, file.name)
+    with open(file_path, 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
