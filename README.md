@@ -6,11 +6,9 @@ Treasure box: Timeline tool to visually hold photos, videos, journal entries, an
 
 This is a self project I am working on. Currently very beginning stages.
 
-### Technology
+### Technology stack
 
-Python
-Django
-HTML
+Python, Django, HTML
 
 
 
