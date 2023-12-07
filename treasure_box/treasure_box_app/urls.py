@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views
+from .views import timeline, upload
 
 urlpatterns = [
-    path("", views.home, name="home")
+    path('timeline/', timeline, name='timeline'),
+    path('upload/', upload, name='upload'),
+    # Other URL patterns...
 ]
