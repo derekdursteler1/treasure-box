@@ -1,0 +1,15 @@
+<!-- templates/shared_timeline.html -->
+
+{% extends 'base.html' %} 
+{% block content %}
+  <h1>Shared Timeline</h1>
+
+  {% for content in shared_content %}
+    <div>
+      <p>{{ content.title }}</p>
+      <img src="{{ content.file.url }}" alt="{{ content.title }}">
+      <p>{{ content.timestamp }}</p>
+      <!-- Add more details as needed -->
+    </div>
+  {% endfor %}
+{% endblock %}

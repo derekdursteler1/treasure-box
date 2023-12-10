@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import UploadFileForm
-import os
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
+from .models import UploadedContent
 
-# Create your views here.
 def timeline(request):
     return render(request, 'timeline.html')
 
@@ -15,20 +12,23 @@ def upload_file(request):
             title = form.cleaned_data['title']
             file = form.cleaned_data['file']
 
-            # Save the file to a specific directory
-            fs = FileSystemStorage()
-            fs.save(file.name, file)
+            # Check if the user is authenticated
+            if request.user.is_authenticated:
+                # Set user to the authenticated user
+                uploaded_content = UploadedContent(title=title, file=file, user=request.user)
+            else:
+                # Set user to None for anonymous uploads
+                uploaded_content = UploadedContent(title=title, file=file, user=None)
 
-            # Optionally, you can store the file information in a database model
-            # Example: FileModel.objects.create(title=title, file_name=file.name)
+            uploaded_content.save()
 
-            return redirect('timeline')  # Redirect to a success page or modify as needed
+            return redirect('timeline')  # Redirect to the 'timeline' view
     else:
-        form = UploadFileForm()
+        form = UploadFileForm()  # Create an empty form for rendering
+
     return render(request, 'upload.html', {'form': form})
 
-def handle_uploaded_file(file):
-    file_path = os.path.join(settings.MEDIA_ROOT, file.name)
-    with open(file_path, 'wb+') as destination:
-        for chunk in file.chunks():
-            destination.write(chunk)
+
+def shared_timeline(request):
+    shared_content = UploadedContent.objects.filter(shared=True).order_by('-timestamp')
+    return render(request, 'feed.html', {'shared_content': shared_content})

@@ -18,5 +18,16 @@
         {{ form }}
         <button type="submit">Upload</button>
     </form>
+
+    <!-- Display the user's timeline content -->
+    {% for content in user_timeline %}
+        <div>
+            <p>{{ content.title }}</p>
+            <img src="{{ content.file.url }}" alt="{{ content.title }}">
+            <p>{{ content.timestamp }}</p>
+            <!-- Add more details as needed -->
+        </div>
+    {% endfor %}
+    
 </body>
 </html>
