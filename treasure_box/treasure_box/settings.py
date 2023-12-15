@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'treasure_box_app',
+    'accounts',
 ]
 
 MIDDLEWARE = [
