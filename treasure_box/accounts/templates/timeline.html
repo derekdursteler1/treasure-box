@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.username }}'s Profile</title>
+    <title>Your Timeline</title>
+    <!-- Add your CSS styles or link to an external stylesheet here -->
 </head>
 <body>
 
-  <h2>{{ user.username }}'s Profile</h2>
-
-  <!-- Display additional user information if needed -->
+  <h1>Your Timeline</h1>
+  
   <!-- Display user's uploads -->
   {% for upload in uploads %}
     <div>
@@ -18,6 +18,12 @@
       <!-- Add other details as needed -->
     </div>
   {% endfor %}
+
+  <form method="post" enctype="multipart/form-data" action="{% url 'upload' %}">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit">Upload</button>
+  </form>
 
 </body>
 </html>
