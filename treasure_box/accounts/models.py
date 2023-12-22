@@ -12,7 +12,7 @@ class UploadedContent(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
-    # Add other fields as needed
+    file = models.FileField(upload_to='uploads/', default='default_filename.txt')  # Adjust the default value as needed
 
     def __str__(self):
         return self.title

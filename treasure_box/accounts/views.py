@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .models import UploadedContent
+from .forms import UploadFileForm
 
 class SignUpView(CreateView):
     template_name = 'registration/register.html'
@@ -28,4 +29,14 @@ def upload_file(request):
 def profile(request):
     user = request.user
     uploads = UploadedContent.objects.filter(user=user)
-    return render(request, 'profile.html', {'user': user, 'uploads': uploads})
+    form = UploadFileForm()
+
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            upload = form.save(commit=False)
+            upload.user = user
+            upload.save()
+            return redirect('profile')
+
+    return render(request, 'profile.html', {'user': user, 'uploads': uploads, 'form': form})
