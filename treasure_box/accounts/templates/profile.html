@@ -15,7 +15,10 @@
     <div>
       <p>{{ upload.title }}</p>
       <p>{{ upload.timestamp }}</p>
-      
+      <form method="post" action="{% url 'delete_upload' upload.id %}">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+      </form>
       <!-- Add links or embeds for files -->
       {% if upload.file %}
         {% if upload.file.name|lower|slice:'-4:' == '.jpg' or upload.file.name|lower|slice:'-5:' == '.jpeg' or upload.file.name|lower|slice:'-4:' == '.png' or upload.file.name|lower|slice:'-4:' == '.gif' %}

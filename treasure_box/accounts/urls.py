@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SignUpView, profile, feed
+from .views import SignUpView, profile, feed, delete_upload
 from django.contrib.auth.views import LoginView
 from django.conf import settings
 from django.conf.urls.static import static
@@ -9,6 +9,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('profile/', profile, name='profile'),
     path('feed/', feed, name='feed'),
+    path('delete/<int:upload_id>/', delete_upload, name='delete_upload'),
 ]
 
 if settings.DEBUG:

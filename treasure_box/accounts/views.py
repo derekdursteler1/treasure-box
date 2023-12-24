@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
@@ -40,6 +40,15 @@ def profile(request):
             return redirect('profile')
 
     return render(request, 'profile.html', {'user': user, 'uploads': uploads, 'form': form})
+
+@login_required
+def delete_upload(request, upload_id):
+    upload = get_object_or_404(UploadedContent, pk=upload_id, user=request.user)
+
+    if request.method == 'POST':
+        upload.delete()
+
+    return redirect('profile')
 
 def feed(request):
     # Fetch all public content
