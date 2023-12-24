@@ -40,3 +40,9 @@ def profile(request):
             return redirect('profile')
 
     return render(request, 'profile.html', {'user': user, 'uploads': uploads, 'form': form})
+
+def feed(request):
+    # Fetch all public content
+    public_uploads = UploadedContent.objects.filter(privacy='public')
+
+    return render(request, 'feed.html', {'public_uploads': public_uploads})

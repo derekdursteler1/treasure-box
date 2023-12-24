@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed</title>
+</head>
+<body>
+
+  <h2>Public Feed</h2>
+
+  <!-- Display public uploads -->
+  {% for upload in public_uploads %}
+    <div>
+      <p>{{ upload.title }}</p>
+      <p>{{ upload.timestamp }}</p>
+      <p>{{ upload.user.username }}</p>
+      <!-- Add other details as needed -->
+    </div>
+  {% endfor %}
+
+</body>
+</html>

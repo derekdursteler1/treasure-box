@@ -13,6 +13,7 @@ class UploadedContent(models.Model):
     title = models.CharField(max_length=255)
     timestamp = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='uploads/', default='default_filename.txt')  # Adjust the default value as needed
+    privacy = models.CharField(max_length=10, choices=[('public', 'Public'), ('private', 'Private')], default='public')
 
     def __str__(self):
         return self.title

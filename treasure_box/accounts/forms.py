@@ -4,4 +4,4 @@ from .models import UploadedContent
 class UploadFileForm(forms.ModelForm):
     class Meta:
         model = UploadedContent
-        fields = ['title', 'file']
+        fields = ['title', 'file', 'privacy']
