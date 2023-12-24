@@ -28,7 +28,8 @@ def upload_file(request):
 @login_required
 def profile(request):
     user = request.user
-    uploads = UploadedContent.objects.filter(user=user)
+    user_uploads = UploadedContent.objects.filter(user=user)
+    public_uploads = UploadedContent.objects.filter(privacy='public')
     form = UploadFileForm()
 
     if request.method == 'POST':
@@ -39,7 +40,7 @@ def profile(request):
             upload.save()
             return redirect('profile')
 
-    return render(request, 'profile.html', {'user': user, 'uploads': uploads, 'form': form})
+    return render(request, 'profile.html', {'user': user, 'user_uploads': user_uploads, 'public_uploads': public_uploads, 'form': form})
 
 @login_required
 def delete_upload(request, upload_id):
