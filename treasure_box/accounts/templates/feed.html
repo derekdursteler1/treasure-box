@@ -15,6 +15,23 @@
       <p>{{ upload.title }}</p>
       <p>{{ upload.timestamp }}</p>
       <p>{{ upload.user.username }}</p>
+      {% if upload.file %}
+        {% if upload.file.name|lower|slice:'-4:' == '.jpg' or upload.file.name|lower|slice:'-5:' == '.jpeg' or upload.file.name|lower|slice:'-4:' == '.png' or upload.file.name|lower|slice:'-4:' == '.gif' %}
+          <img src="{{ upload.file.url }}" alt="{{ upload.title }}">
+        {% elif upload.file.name|lower|slice:'-4:' == '.mp3' %}
+          <audio controls>
+            <source src="{{ upload.file.url }}" type="audio/mp3">
+            Your browser does not support the audio tag.
+          </audio>
+        {% elif upload.file.name|lower|slice:'-4:' == '.mp4' %}
+          <video width="320" height="240" controls>
+            <source src="{{ upload.file.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        {% else %}
+          <a href="{{ upload.file.url }}" download>Download File</a>
+        {% endif %}
+      {% endif %}
       <!-- Add other details as needed -->
     </div>
   {% endfor %}
